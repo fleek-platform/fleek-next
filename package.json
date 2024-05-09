@@ -34,7 +34,7 @@
     ]
   },
   "dependencies": {
-    "@fleekxyz/open-next": "3.0.0",
+    "@fleekxyz/open-next": "3.0.1",
     "@fleekxyz/proxy": "0.0.8",
     "@fleekxyz/sdk": "0.7.3",
     "esbuild": "^0.20.2",

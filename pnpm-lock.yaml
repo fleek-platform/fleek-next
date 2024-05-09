@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@fleekxyz/open-next':
-        specifier: 3.0.0
-        version: 3.0.0
+        specifier: 3.0.1
+        version: 3.0.1
       '@fleekxyz/proxy':
         specifier: 0.0.8
         version: 0.0.8
@@ -660,8 +660,8 @@ packages:
     resolution: {integrity: sha512-ESiIudvhoYni+MdsI8oD7skpprZ89qKocwRM2KEvhhBJ9nl5MRh7BXU5GTod7Mdygq+AUl+QzId6iWJKR/wABA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@fleekxyz/open-next@3.0.0':
-    resolution: {integrity: sha512-tcHulZYfRW890vgGJbjbQcHRQelX9YCxj4KKGciFbWxsYgJDmgb5zplvdpxESk5x+Msl01dEYFJbTAes8XNP1w==}
+  '@fleekxyz/open-next@3.0.1':
+    resolution: {integrity: sha512-AE1V5sTcGmShpxZBJ5oHNiy9crcclOfbJMLiSn97AIJTraB0p4i80DYHvGZafbVueoSNJLhzZ/DkU67pYTXB0Q==}
     hasBin: true
 
   '@fleekxyz/proxy@0.0.8':
@@ -3730,7 +3730,7 @@ snapshots:
 
   '@eslint/js@9.2.0': {}
 
-  '@fleekxyz/open-next@3.0.0':
+  '@fleekxyz/open-next@3.0.1':
     dependencies:
       '@aws-sdk/client-dynamodb': 3.569.0
       '@aws-sdk/client-lambda': 3.569.0
