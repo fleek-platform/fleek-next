@@ -18,10 +18,8 @@ export async function uploadFile(props: { filePath: string; remotePath: string; 
   const data = await fs.readFile(filePath, 'utf8');
 
   if (remotePath === 'function') {
-    const modifiedData = data.replace(
-      'e10.headers["x-forwarded-for"] ??= null == (o7 = x5.socket)',
-      'e10.headers["x-forwarded-for"] ??= null == (o7 = x5?.socket)',
-    );
+    // TODO: Fix Next.js's bad bundling instead of doing this hack
+    const modifiedData = data.replaceAll(/([\w\d]{1,3}).socket/g, '$1?.socket');
     return uploadData({ data: modifiedData, fileName: path.basename(filePath), fleekSdk });
   } else {
     return uploadData({ data, fileName: path.basename(filePath), fleekSdk });
@@ -78,12 +76,12 @@ export async function createFunction(props: {
   });
 
   const response: Origin = {
-    url: `http://staging.fleek-test.network/services/1/ipfs/${result}`,
+    url: `http://fleek-test.network/services/1/ipfs/${result}`,
     type: 'functions',
     name: props.key,
   };
 
-  console.log(`Function ${props.key}`, response.url);
+  console.log(`Function ${props.key === '' ? 'default' : props.key}`, response.url);
 
   return response;
 }
@@ -128,21 +126,23 @@ export async function createOrigins(props: {
       fleekSdk: props.fleekSdk,
       key: 'imageOptimizer',
     }),
-    ...(await Object.entries(restOrigins).reduce(
-      async (acc, [key, value]) => {
-        const acc2 = await acc;
-        if (value.type === 'function') {
-          acc2[key] = await createFunction({
-            openNextPath: props.openNextPath,
-            origin: value,
-            fleekSdk: props.fleekSdk,
-            key,
-          });
-        }
-        return acc2;
-      },
-      {} as Promise<Record<string, Origin>>,
-    )),
+    ...(await Object.entries(restOrigins)
+      .filter(([key]) => key !== 'default')
+      .reduce(
+        async (acc, [key, value]) => {
+          const acc2 = await acc;
+          if (value.type === 'function') {
+            acc2[key] = await createFunction({
+              openNextPath: props.openNextPath,
+              origin: value,
+              fleekSdk: props.fleekSdk,
+              key,
+            });
+          }
+          return acc2;
+        },
+        {} as Promise<Record<string, Origin>>,
+      )),
     ...edgeFunctionOrigins,
   };
 }
@@ -194,6 +194,8 @@ export async function createProxyFunction(props: {
     fleekSdk,
   } = props;
 
+  printHeader('Creating proxy function');
+
   const imageOptimizerPath = '^_next/image$';
   let defaultRoute;
 
@@ -205,17 +207,21 @@ export async function createProxyFunction(props: {
         functionManifest = functions['/page'];
         defaultRoute = value.url;
       } else if (key === 'imageOptimizer') {
-        return { key: imageOptimizerPath, value: value.url };
+        return { [imageOptimizerPath]: value.url };
       } else {
         const auxKey = `/${key}/page`;
         functionManifest = functions[auxKey];
       }
 
+      if (!functionManifest.matchers.length) {
+        return {};
+      }
+
       const matcher = functionManifest.matchers[0];
 
-      return { key: matcher.regexp, value: `${value.url}${matcher.originalSource}` };
+      return { [matcher.regexp]: `${value.url}${matcher.originalSource}` };
     })
-    .reduce((acc, curr) => ((acc[curr?.key] = curr.value), acc), {} as Record<string, string>);
+    .reduce((acc, curr) => ({ ...acc, ...curr }), {} as Record<string, string>);
 
   const assetRoute = readdirSync(path.join(openNextPath, '.open-next', 'assets'))
     .map((file) => {
@@ -228,7 +234,6 @@ export async function createProxyFunction(props: {
   const functionCode = proxyFunctionTemplate({
     routes,
     default: defaultRoute ?? '',
-    // default: origins.s3.url
   });
 
   await build({
@@ -258,7 +263,7 @@ export async function createProxyFunction(props: {
     fleekSdk,
   });
 
-  console.log(`Function routing http://staging.fleek-test.network/services/1/ipfs/${result}`);
+  console.log(`Function routing http://fleek-test.network/services/1/ipfs/${result}`);
 }
 
 function escapeRegex(str: string) {
