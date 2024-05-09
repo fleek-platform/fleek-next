@@ -2,14 +2,15 @@ import { FleekRequest, FleekResponse } from '../types';
 import { InternalResult } from './types';
 
 async function convertFrom(event: FleekRequest) {
+  const url = new URL(event.path, 'http://0.0.0.0');
   return {
     type: 'core',
-    method: 'GET',
+    method: event.method,
     rawPath: event.path,
-    url: event.path,
-    body: Buffer.from(event.body ?? '', 'utf8'),
-    headers: { host: '', ...event.headers },
-    query: event.query,
+    url: event.headers?.host ? event.headers.host : url.toString(),
+    body: event.body ? Buffer.from(event.body, 'utf8') : null,
+    headers: { host: url.toString(), ...event.headers },
+    query: event.query ?? {},
     cookies: {},
     remoteAddress: '0.0.0.0',
   };

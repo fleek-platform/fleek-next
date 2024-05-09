@@ -2,7 +2,7 @@ export interface FleekNextOutput {
   origins: Record<string, { url: string }>;
 }
 
-export type HttpMethod = 'Get' | 'Head' | 'Post' | 'Put' | 'Delete' | 'Connect' | 'Options' | 'Trace' | 'Patch';
+export type HttpMethod = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH';
 
 export type FleekRequest = {
   method: HttpMethod;
