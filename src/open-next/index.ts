@@ -1,6 +1,9 @@
 import * as path from 'path';
 import { execSync } from 'child_process';
 import { getBuildEnvVars } from '../utils';
+import { MiddlewareManifest } from '../next/types';
+import { templateOpenNextConfig } from './open-next.config';
+import { writeFileSync } from 'fs';
 
 export function bundleApp(opts: { openNextPath: string; environment?: Record<string, string> }) {
   const buildPath = opts.openNextPath;
@@ -18,4 +21,31 @@ export function bundleApp(opts: { openNextPath: string; environment?: Record<str
     console.error('Failed to run open-next build:', error);
     throw error;
   }
+}
+
+export function buildOpenNextConfig(opts: { openNextPath: string; middlewareManifest: MiddlewareManifest }) {
+  const { openNextPath, middlewareManifest } = opts;
+
+  const functionConfigs = Object.entries(middlewareManifest.functions)
+    .map(([name, fn]) => {
+      const key = name === '/page' ? '' : name.replace(/\/([\w\d-@/[\]]*)\/page/, '$1');
+      return `
+      "${key}": {
+        runtime: 'edge',
+        routes: ["${fn.name}"],
+        patterns: ["${fn.page}"],
+        minify: true,
+        placement: 'global',
+        override: {
+          converter: async () => converter,
+          wrapper: async () => wrapper,
+        },
+      },
+      `;
+    })
+    .join('');
+
+  const openNextConfig = templateOpenNextConfig({ functionConfigs });
+
+  writeFileSync(path.join(openNextPath, 'open-next.config.ts'), openNextConfig);
 }

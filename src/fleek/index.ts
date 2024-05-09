@@ -213,7 +213,7 @@ export async function createProxyFunction(props: {
         functionManifest = functions[auxKey];
       }
 
-      if (!functionManifest.matchers.length) {
+      if (!functionManifest?.matchers?.length) {
         return {};
       }
 

@@ -4,7 +4,7 @@ import { readMiddlewareManifest, readOpenNextOutput } from './utils';
 import { FleekSdk, PersonalAccessTokenService } from '@fleekxyz/sdk';
 import { findPackageManager } from './utils/packageManager';
 import { buildApp } from './next';
-import { bundleApp } from './open-next';
+import { buildOpenNextConfig, bundleApp } from './open-next';
 import { createOrigins, createProxyFunction } from './fleek';
 
 (async () => {
@@ -26,6 +26,11 @@ import { createOrigins, createProxyFunction } from './fleek';
   });
 
   const middlewareManifest = readMiddlewareManifest(openNextPath);
+
+  buildOpenNextConfig({
+    openNextPath,
+    middlewareManifest,
+  });
 
   bundleApp({
     openNextPath,
