@@ -1,8 +1,9 @@
 import { readFileSync } from 'node:fs';
 import * as path from 'node:path';
 import * as fs from 'node:fs/promises';
-import { OpenNextOutput } from './open-next/types';
-import { MiddlewareManifest } from './next/types';
+
+import { MiddlewareManifest } from './commands/build/next/types.js';
+import { OpenNextOutput } from './commands/build/open-next/types.js';
 
 export async function copyDir(props: { src: string; dest: string }) {
   const { src, dest } = props;
@@ -44,15 +45,15 @@ export function getSubstitutionValue(v: string): string {
   return `{{ ${v} }}`;
 }
 
-export function readMiddlewareManifest(openNextPath: string): MiddlewareManifest {
+export function readMiddlewareManifest(projectPath: string): MiddlewareManifest {
   return JSON.parse(
-    readFileSync(path.join(openNextPath, '.next', 'server', 'middleware-manifest.json'), 'utf-8'),
+    readFileSync(path.join(projectPath, '.next', 'server', 'middleware-manifest.json'), 'utf-8'),
   ) as MiddlewareManifest;
 }
 
-export function readOpenNextOutput(openNextPath: string): OpenNextOutput {
+export function readOpenNextOutput(projectPath: string): OpenNextOutput {
   return JSON.parse(
-    readFileSync(path.join(openNextPath, '.open-next', 'open-next.output.json'), 'utf-8'),
+    readFileSync(path.join(projectPath, '.open-next', 'open-next.output.json'), 'utf-8'),
   ) as OpenNextOutput;
 }
 

@@ -1,5 +1,6 @@
 export const templateOpenNextConfig = (opts: {
   functionConfigs: string;
+  buildCommand: string;
 }) => `export type HttpMethod = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH';
 
 export type FleekRequest = {
@@ -158,7 +159,6 @@ export const converter = {
 const config = {
   default: {
     runtime: "edge",
-    experimentalBundledNextServer: true,
     minify: true,
     placement: "global",
     override: {
@@ -178,7 +178,7 @@ const config = {
       wrapper: async () => wrapper,
     },
   },
-  buildCommand: "npm run build",
+  buildCommand: "${opts.buildCommand}",
   dangerous: {
     disableIncrementalCache: true,
     disableTagCache: true,

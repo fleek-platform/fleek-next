@@ -1,57 +1,29 @@
 #!/usr/bin/env node
-import { readMiddlewareManifest, readOpenNextOutput } from './utils';
+'use strict';
 
-import { FleekSdk, PersonalAccessTokenService } from '@fleekxyz/sdk';
-import { findPackageManager } from './utils/packageManager';
-import { buildApp } from './next';
-import { buildOpenNextConfig, bundleApp } from './open-next';
-import { createOrigins, createProxyFunction } from './fleek';
+import * as semver from 'semver';
 
-(async () => {
-  const fleekSdk = new FleekSdk({
-    projectId: process.env.FLEEK_PROJECT_ID!,
-    accessTokenService: new PersonalAccessTokenService({
-      personalAccessToken: process.env.FLEEK_PAT!,
-      projectId: process.env.FLEEK_PROJECT_ID!,
-    }),
-  });
+import { asyncParser, init } from './cli.js';
+import { loadJSONFromPackageRoot } from './utils/json.js';
+import { checkForPackageUpdates } from './utils/update-notifier.js';
 
-  const openNextPath = process.cwd();
-  const packageManager = findPackageManager(openNextPath);
+const pkgJson = loadJSONFromPackageRoot('package.json');
+const pkgVersion = pkgJson.version;
+const requiredVersion = pkgJson.engines.node;
 
-  buildApp({
-    openNextPath,
-    environment: {},
-    packageManager,
-  });
+if (!semver.satisfies(process.version, requiredVersion)) {
+  // TODO: Pick text from locales
+  console.error(`⚠️ You are using Node ${process.version}. We require Node ${requiredVersion} or higher!`);
+  process.exit(1);
+}
 
-  const middlewareManifest = readMiddlewareManifest(openNextPath);
+// Inform users of updates in a non-blocking manner
+checkForPackageUpdates(pkgJson);
 
-  buildOpenNextConfig({
-    openNextPath,
-    middlewareManifest,
-  });
+// Catch uncaught exception(s)
+process.once('uncaughtException', (error) => {
+  throw error;
+});
 
-  bundleApp({
-    openNextPath,
-  });
-
-  const openNextOutput = readOpenNextOutput(openNextPath);
-
-  const props = {
-    openNextPath,
-    openNextOutput,
-    fleekSdk,
-  };
-
-  const origins = await createOrigins(props);
-
-  await createProxyFunction({
-    openNextPath,
-    middlewareManifest,
-    origins,
-    fleekSdk,
-  });
-
-  process.exit(0);
-})();
+// Initialise
+init({ version: pkgVersion, parser: asyncParser });

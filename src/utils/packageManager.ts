@@ -15,8 +15,13 @@ const packageManagers = [
   { file: 'bun.lockb', packager: PackageManager.bun },
 ];
 
-export function findPackageManager(appPath: string) {
-  const found = packageManagers.find((packageManager) => existsSync(path.join(appPath, packageManager.file)));
+export function findPackageManager(projectPath: string) {
+  const found = packageManagers.find((packageManager) => existsSync(path.join(projectPath, packageManager.file)));
 
   return found?.packager ?? PackageManager.npm;
+}
+
+export function getBuildCommand(opts: { projectPath: string }) {
+  const packageManager = findPackageManager(opts.projectPath);
+  return `${packageManager} build`;
 }
