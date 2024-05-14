@@ -4,3 +4,4 @@ test
 src/**.js
 coverage
 *.log
+.DS_Store

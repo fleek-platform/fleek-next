@@ -68,8 +68,6 @@ export async function createFunction(props: {
   dryRun?: boolean;
 }): Promise<Origin> {
   const functionName = props.key === '' ? 'default' : props.key;
-
-  output.spinner(`${t('creatingFunction', { name: functionName })}...`);
   const filename = props.filename ?? 'index.mjs';
 
   const filePath = path.join(props.openNextPath, props.origin.bundle, filename);
@@ -85,12 +83,10 @@ export async function createFunction(props: {
   const response: Origin = {
     url: `https://${result.slug}.functions.stg.on-fleek-test.app`,
     type: 'functions',
-    name: props.key,
+    name: props.key === '' ? '/' : props.key,
   };
 
-  if (!props.dryRun) {
-    output.success(t('functionCreated', { name: functionName, url: response.url }));
-  } else {
+  if (props.dryRun) {
     output.success(t('functionCreatedDryRun', { name: functionName }));
   }
 
@@ -231,7 +227,7 @@ export async function createProxyFunction(props: {
     fleekSdk,
   } = props;
 
-  output.spinner(t('creatingFunction', { name: 'routing' }));
+  output.spinner(`${t('creatingFunction', { name: 'routing' })}`);
 
   const imageOptimizerPath = '^_next/image$';
   let defaultRoute;
@@ -273,6 +269,8 @@ export async function createProxyFunction(props: {
     default: defaultRoute ?? '',
   });
 
+  output.success(t('functionCreated', { name: 'routing' }));
+
   await build({
     outfile: path.join(projectPath, '.open-next', 'fleek', 'routing.js'),
     bundle: true,
@@ -299,6 +297,7 @@ export async function createProxyFunction(props: {
     filePath: path.join(projectPath, '.open-next', 'fleek', 'routing.js'),
     remotePath: 'function',
     fleekSdk,
+    dryRun: props.dryRun,
   });
 
   const url = `https://${result.slug}.functions.stg.on-fleek-test.app`;

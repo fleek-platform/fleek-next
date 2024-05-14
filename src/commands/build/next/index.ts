@@ -4,6 +4,34 @@ import { output } from '../../../cli.js';
 import { t } from '../../../utils/translation.js';
 import { NextjsBuildError } from '../../../errors/NextjsBuildError.js';
 
+export function installApp(opts: {
+  projectPath: string;
+  installCommand: string;
+  environment?: Record<string, string>;
+}) {
+  const { projectPath, installCommand } = opts;
+
+  output.log(t('installingDependencies'));
+  output.spinner(`${t('installing')}`);
+  try {
+    // will throw if build fails - which is desired
+    execSync(installCommand, {
+      cwd: projectPath,
+      env: getBuildEnvVars(opts),
+      stdio: 'inherit',
+    });
+
+    output.success(t('installingSuccess'));
+  } catch (error) {
+    if (error instanceof Error) {
+      output.error(t('installingErrorIncludeError', { error: error.message }));
+      throw new NextjsBuildError({ error });
+    }
+    output.error(t('installingError'));
+    throw new NextjsBuildError({});
+  }
+}
+
 export function buildApp(opts: { projectPath: string; buildCommand: string; environment?: Record<string, string> }) {
   const { projectPath, buildCommand } = opts;
 
@@ -14,15 +42,16 @@ export function buildApp(opts: { projectPath: string; buildCommand: string; envi
     execSync(buildCommand, {
       cwd: projectPath,
       env: getBuildEnvVars(opts),
+      stdio: 'inherit',
     });
 
-    output.success('Next.js app successfully built.');
+    output.success(t('nextjsBuildSuccess'));
   } catch (error) {
     if (error instanceof Error) {
-      output.error(`Failed to build Next.js app: ${error.message}`);
+      output.error(t('nextjsBuildErrorIncludeError', { error: error.message }));
       throw new NextjsBuildError({ error });
     }
-    output.error(`Failed to build Next.js app`);
+    output.error(t('nextjsBuildError'));
     throw new NextjsBuildError({});
   }
 }

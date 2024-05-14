@@ -1,30 +1,23 @@
 import * as path from 'path';
-import { execSync } from 'child_process';
 import { writeFileSync } from 'fs';
-import { getBuildEnvVars } from '../../../utils.js';
 import { MiddlewareManifest } from '../next/types.js';
 import { templateOpenNextConfig } from './open-next.config.js';
 import { NextjsBundleError } from '../../../errors/NextjsBundleError.js';
 import { output } from '../../../cli.js';
 import { t } from '../../../utils/translation.js';
+import { build } from '@fleekxyz/open-next/build.js';
 
-export function bundleApp(opts: {
-  projectPath: string;
-  openNextConfigPath: string;
-  environment?: Record<string, string>;
-}) {
-  const { projectPath, openNextConfigPath } = opts;
-  output.log(`${t('bundlingNextjsApp')}`);
+export async function bundleApp(opts: { openNextConfigPath: string }) {
+  const { openNextConfigPath } = opts;
+  // output.log(`${t('bundlingNextjsApp')}`);
   output.spinner(`${t('bundling')}`);
 
-  // TODO: update the open-next fork to export the build function
-  const localBinPath = path.join(projectPath, 'node_modules', '@fleekxyz', 'next', 'node_modules', '.bin');
-  const bin = path.join(localBinPath, 'open-next');
-
   try {
-    execSync(`${bin} build --config-path=${openNextConfigPath} --skip-build=true --standalone-mode=false`, {
-      cwd: projectPath,
-      env: getBuildEnvVars(opts),
+    await build({
+      openNextConfigPath,
+      skipBuild: true,
+      standaloneMode: false,
+      logLevel: 'error',
     });
     output.success(t('bundlingSuccess'));
   } catch (error) {
@@ -66,6 +59,7 @@ export function buildOpenNextConfig(opts: {
   const openNextConfig = templateOpenNextConfig({ functionConfigs, buildCommand });
   const openNextConfigPath = path.join(projectPath, 'open-next.config.ts');
 
+  output.debug(t('openNextConfigOutputPath', { outputPath: openNextConfigPath }));
   writeFileSync(path.join(projectPath, 'open-next.config.ts'), openNextConfig);
 
   return openNextConfigPath;

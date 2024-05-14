@@ -1,15 +1,15 @@
 import { readFileSync } from 'node:fs';
 import * as path from 'node:path';
-import * as fs from 'node:fs/promises';
+import * as fs from 'node:fs';
 
 import { MiddlewareManifest } from './commands/build/next/types.js';
 import { OpenNextOutput } from './commands/build/open-next/types.js';
 
 export async function copyDir(props: { src: string; dest: string }) {
   const { src, dest } = props;
-  const entries = await fs.readdir(src, { withFileTypes: true });
+  const entries = await fs.readdirSync(src, { withFileTypes: true });
 
-  await fs.mkdir(dest, { recursive: true });
+  await fs.mkdirSync(dest, { recursive: true });
 
   for (const entry of entries) {
     const srcPath = path.join(src, entry.name);
@@ -18,8 +18,15 @@ export async function copyDir(props: { src: string; dest: string }) {
     if (entry.isDirectory()) {
       await copyDir({ src: srcPath, dest: destPath });
     } else {
-      await fs.copyFile(srcPath, destPath);
+      await fs.copyFileSync(srcPath, destPath);
     }
+  }
+}
+
+export async function rmDir(props: { dirPath: string }) {
+  const { dirPath } = props;
+  if (fs.existsSync(dirPath)) {
+    fs.rmSync(dirPath, { recursive: true, force: true });
   }
 }
 

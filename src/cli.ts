@@ -5,7 +5,7 @@ import { t } from './utils/translation.js';
 import { Output } from './output/Output.js';
 import cmdBuild from './commands/build/index.js';
 
-const isDebugging = process.argv.includes('--debug');
+const isDebugging = process.argv.includes('--verbose');
 export const output = new Output({
   stream: process.stdout,
   debug: isDebugging,
@@ -31,10 +31,15 @@ const logo = `
 `;
 
 export const init = ({ version, parser }: InitArgs) => {
+  process.on('SIGINT', function () {
+    console.log('\nGracefully shutting down from SIGINT (Ctrl-C)');
+    // some other closing procedures go here
+    process.exit(0);
+  });
+
   const program: Command = new Command()
     .name('fleek-next')
-    .option('--debug', t('enableDebugMode'))
-    .option('-h, --help', t('printHelp'))
+    .option('--verbose', t('enableVerboseMode'))
     .action(() => program.outputHelp())
     .version(version, '-v, --version', t('printVersionDetails'));
 
