@@ -51,6 +51,32 @@ Use the Fleek Next CLI to build and deploy your application:
 npx fleek-next
 ```
 
+## Login to Fleek
+
+If you don't have a project ID or Fleek personal access token:
+
+```sh
+fleek login
+```
+
+1. Create a personal access token and store it somewhere safe:
+
+```sh
+fleek pat create --name '<name of your personal access token>'
+```
+
+2. Create a project if you don't have one yet:
+
+```sh
+fleek projects create --name '<name of your project>'
+```
+
+3. Get your project ID:
+
+```sh
+fleek projects list | grep '<name of your project>' | awk '{print $1}'
+```
+
 ## Additional Options
 
 The `build` command supports several options to customize the build and deployment process:
