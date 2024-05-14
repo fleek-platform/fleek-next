@@ -81,7 +81,7 @@ export async function createFunction(props: {
   });
 
   const response: Origin = {
-    url: `https://${result.slug}.functions.stg.on-fleek-test.app`,
+    url: `https://${result.slug}.functions.on-fleek.app`,
     type: 'functions',
     name: props.key === '' ? '/' : props.key,
   };
@@ -300,7 +300,7 @@ export async function createProxyFunction(props: {
     dryRun: props.dryRun,
   });
 
-  const url = `https://${result.slug}.functions.stg.on-fleek-test.app`;
+  const url = `https://${result.slug}.functions.on-fleek.app`;
 
   if (!props.dryRun) {
     output.success(t('functionCreated', { name: 'routing' }));
