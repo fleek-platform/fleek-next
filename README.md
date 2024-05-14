@@ -4,13 +4,6 @@
 
 The Fleek Next CLI allows you to deploy your server-side Next.js application on Fleek. This CLI is currently in an experimental stage.
 
-## Features
-
-- Deploy Next.js applications to Fleek Network
-- Support for edge functions
-- Serverless deployment
-- Easy configuration and setup
-
 # Installation
 
 - **npm**
