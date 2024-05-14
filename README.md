@@ -41,30 +41,46 @@ export FLEEK_PAT=<your personal access token>
 Use the Fleek Next CLI to build and deploy your application:
 
 ```sh
-npx fleek-next
+npx fleek-next build
+# or if installed globally
+fleek-next build
+```
+
+If you are running the command outside of your project's root dir, you can set the path to it with the project path flag `-p`/`--projectPath`:
+
+```sh
+fleek-next build -p path/to/my/repo
 ```
 
 ## Login to Fleek
 
-If you don't have a project ID or Fleek personal access token:
+If you don't have a project ID or Fleek personal access token, you can make use of the [Fleek CLI](https://www.npmjs.com/package/@fleekxyz/cli):
+
+1. Install the Fleek CLI
+
+```
+npm i -g @fleekxyz/cli
+```
+
+2. Login to your Fleek account
 
 ```sh
 fleek login
 ```
 
-1. Create a personal access token and store it somewhere safe:
+3. Create a personal access token and store it somewhere safe:
 
 ```sh
 fleek pat create --name '<name of your personal access token>'
 ```
 
-2. Create a project if you don't have one yet:
+4. Create a project if you don't have one yet:
 
 ```sh
 fleek projects create --name '<name of your project>'
 ```
 
-3. Get your project ID:
+5. Get your project ID:
 
 ```sh
 fleek projects list | grep '<name of your project>' | awk '{print $1}'
