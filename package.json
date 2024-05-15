@@ -1,5 +1,5 @@
 {
-  "name": "@fleekxyz/next",
+  "name": "@fleek-platform/next",
   "version": "0.3.2",
   "description": "Deploy your server-side Next.js application on Fleek",
   "bin": {
@@ -38,8 +38,8 @@
     "node": ">=18"
   },
   "dependencies": {
-    "@fleekxyz/open-next": "^3.0.4",
-    "@fleekxyz/proxy": "0.0.8",
+    "@fleek-platform/open-next": "^3.0.4",
+    "@fleek-platform/proxy": "0.1.0",
     "@fleekxyz/sdk": "2.1.0-rc.1",
     "ansi-escapes": "^7.0.0",
     "as-table": "^1.0.55",

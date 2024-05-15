@@ -5,7 +5,7 @@ import { templateOpenNextConfig } from './open-next.config.js';
 import { NextjsBundleError } from '../../../errors/NextjsBundleError.js';
 import { output } from '../../../cli.js';
 import { t } from '../../../utils/translation.js';
-import { build } from '@fleekxyz/open-next/build.js';
+import { build } from '@fleek-platform/open-next/build.js';
 
 export async function bundleApp(opts: { openNextConfigPath: string }) {
   const { openNextConfigPath } = opts;

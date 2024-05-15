@@ -9,13 +9,13 @@ The Fleek Next CLI allows you to deploy your server-side Next.js application on 
 - **npm**
 
 ```bash
-npm install @fleekxyz/next
+npm install @fleek-platform/next
 ```
 
 - **pnpm**
 
 ```bash
-pnpm install @fleekxyz/next
+pnpm install @fleek-platform/next
 ```
 
 # Usage

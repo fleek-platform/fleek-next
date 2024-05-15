@@ -1,7 +1,7 @@
 import { FleekFunction, FleekSdk } from '@fleekxyz/sdk';
 import { BaseFunction, OpenNextOutput } from '../open-next/types';
 import path from 'node:path';
-import { Routes } from '@fleekxyz/proxy';
+import { Routes } from '@fleek-platform/proxy';
 import { build } from 'esbuild';
 import * as fs from 'node:fs/promises';
 import alias from 'esbuild-plugin-alias';
@@ -287,7 +287,7 @@ export async function createProxyFunction(props: {
     platform: 'neutral',
     plugins: [
       alias({
-        '@fleekxyz/proxy': require.resolve('@fleekxyz/proxy'),
+        '@fleek-platform/proxy': require.resolve('@fleek-platform/proxy'),
       }),
     ],
   });
