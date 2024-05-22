@@ -95,7 +95,7 @@ fleek projects list | grep '<name of your project>' | awk '{print $1}'
 
 ## Additional Options
 
-The `build` command supports several options to customize the build and deployment process:
+The `deploy` command supports several options to customize the build and deployment process:
 
 - `-d, --dryrun`: Builds the Next.js app without deploying it to Fleek. Defaults to `false`.
 - `-p, --project-path <path>`: The path to your Next.js project's root directory. Defaults to the path where the command is run.
