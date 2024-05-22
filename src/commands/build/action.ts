@@ -20,9 +20,13 @@ type BuildArgs = {
   clean?: boolean;
 };
 
-export async function sdkClient() {
+type projectPath = {
+  path?: string;
+};
+
+export async function sdkClient({ path }: projectPath) {
   output.spinner(`${t('fleekSdkAuth')}`);
-  const sdk = await getSdkClient();
+  const sdk = await getSdkClient({ path: path });
   if (!sdk) {
     output.error(t('fleekSdkAuthError'));
     throw new UnauthenticatedError();
@@ -71,7 +75,7 @@ export const buildAction = async (args: BuildArgs) => {
 
   // Instantiate SDK client
   // Make sure we have the needed credentials
-  const sdk = await sdkClient();
+  const sdk = await sdkClient({ path: projectPath });
 
   // Clean previous build artifacts
   if (clean) {

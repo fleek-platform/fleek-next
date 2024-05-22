@@ -4,14 +4,18 @@ import { getProjectIdOrPrompt } from '../commands/build/prompts/getProjectIdOrPr
 import { MissingPersonalAccessTokenError } from '../errors/MissingPersonalAccessTokenError.js';
 import { MissingProjectIdError } from '../errors/MissingProjectIdError.js';
 
-export async function getSdkClient(): Promise<FleekSdk> {
+type projectPath = {
+  path?: string;
+};
+
+export async function getSdkClient({ path }: projectPath): Promise<FleekSdk> {
   const personalAccessToken = await getPersonalAccessTokenOrPrompt();
 
   if (!personalAccessToken) {
     throw new MissingPersonalAccessTokenError();
   }
 
-  const projectId = await getProjectIdOrPrompt();
+  const projectId = await getProjectIdOrPrompt({ path: path });
 
   if (!projectId) {
     throw new MissingProjectIdError();

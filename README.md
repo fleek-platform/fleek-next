@@ -32,11 +32,18 @@ export const runtime = 'edge';
 2. **Set environment variables**
 
 ```sh
-export FLEEK_PROJECT_ID=<your project id>
 export FLEEK_PAT=<your personal access token>
 ```
 
-3. **Build and Deploy**
+3. Add `fleek.json` to your project's root dir:
+
+```json
+{
+  "FLEEK_PROJECT_ID": <your project id>
+}
+```
+
+4. **Build and Deploy**
 
 Use the Fleek Next CLI to build and deploy your application:
 
