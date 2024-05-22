@@ -41,15 +41,15 @@ export FLEEK_PAT=<your personal access token>
 Use the Fleek Next CLI to build and deploy your application:
 
 ```sh
-npx fleek-next build
+npx fleek-next deploy
 # or if installed globally
-fleek-next build
+fleek-next deploy
 ```
 
 If you are running the command outside of your project's root dir, you can set the path to it with the project path flag `-p`/`--projectPath`:
 
 ```sh
-fleek-next build -p path/to/my/repo
+fleek-next deploy -p path/to/my/repo
 ```
 
 ## Login to Fleek
