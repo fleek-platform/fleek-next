@@ -39,7 +39,7 @@ export FLEEK_PAT=<your personal access token>
 
 ```json
 {
-  "FLEEK_PROJECT_ID": <your project id>
+  "FLEEK_PROJECT_ID": "<your project id>"
 }
 ```
 
