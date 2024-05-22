@@ -1,9 +1,9 @@
 import { textPrompt } from '../../../prompts/textPrompt.js';
 import { t } from '../../../utils/translation.js';
-import { config } from '../../../config.js';
+import { secrets } from '../../../secrets.js';
 
 export const getProjectIdOrPrompt = async () => {
-  let projectId = config.FLEEK_PROJECT_ID;
+  let projectId = secrets.FLEEK_PROJECT_ID;
 
   if (!projectId) {
     projectId = await textPrompt({
