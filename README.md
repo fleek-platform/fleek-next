@@ -4,6 +4,10 @@
 
 The Fleek Next CLI allows you to deploy your server-side Next.js application on Fleek. This CLI is currently in an experimental stage.
 
+# 🚧 Work in Progress 🚧
+
+This repository is currently under development and is a **Work in Progress**. Features and functionalities may change frequently.
+
 # Installation
 
 - **npm**
