@@ -1,8 +1,8 @@
-# ⚡️Fleek Proxy
+# ⚡️Fleek Next Adapter
 
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-blue.svg)](https://conventionalcommits.org)
 
-The Fleek Next CLI allows you to deploy your server-side Next.js application on Fleek. This CLI is currently in an experimental stage.
+The Fleek Next.js adapter allows you to deploy your server-side Next.js application on Fleek.
 
 # 🚧 Work in Progress 🚧
 
@@ -42,7 +42,7 @@ export FLEEK_PAT=<your personal access token>
 
 3. **Build and Deploy**
 
-Use the Fleek Next CLI to build and deploy your application:
+Use the Fleek Next.js adapter to build and deploy your application via the command line:
 
 ```sh
 npx fleek-next build
