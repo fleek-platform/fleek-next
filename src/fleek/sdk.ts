@@ -1,6 +1,6 @@
 import { FleekSdk, PersonalAccessTokenService } from '@fleekxyz/sdk';
-import { getPersonalAccessTokenOrPrompt } from '../commands/build/prompts/getPersonalAccessTokenOrPrompt.js';
-import { getProjectIdOrPrompt } from '../commands/build/prompts/getProjectIdOrPrompt.js';
+import { getPersonalAccessTokenOrPrompt } from '../commands/deploy/prompts/getPersonalAccessTokenOrPrompt.js';
+import { getProjectIdOrPrompt } from '../commands/deploy/prompts/getProjectIdOrPrompt.js';
 import { MissingPersonalAccessTokenError } from '../errors/MissingPersonalAccessTokenError.js';
 import { MissingProjectIdError } from '../errors/MissingProjectIdError.js';
 

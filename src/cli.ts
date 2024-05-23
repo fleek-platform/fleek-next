@@ -3,7 +3,7 @@
 import { Command } from 'commander';
 import { t } from './utils/translation.js';
 import { Output } from './output/Output.js';
-import cmdBuild from './commands/build/index.js';
+import cmdBuild from './commands/deploy/index.js';
 
 const isDebugging = process.argv.includes('--verbose');
 export const output = new Output({

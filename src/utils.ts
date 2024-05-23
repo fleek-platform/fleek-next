@@ -2,8 +2,8 @@ import { readFileSync } from 'node:fs';
 import * as path from 'node:path';
 import * as fs from 'node:fs';
 
-import { MiddlewareManifest } from './commands/build/next/types.js';
-import { OpenNextOutput } from './commands/build/open-next/types.js';
+import { MiddlewareManifest } from './commands/deploy/next/types.js';
+import { OpenNextOutput } from './commands/deploy/open-next/types.js';
 
 export async function copyDir(props: { src: string; dest: string }) {
   const { src, dest } = props;
