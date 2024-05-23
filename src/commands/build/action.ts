@@ -25,12 +25,13 @@ type projectPath = {
 };
 
 export async function sdkClient({ path }: projectPath) {
-  output.spinner(`${t('fleekSdkAuth')}`);
   const sdk = await getSdkClient({ path: path });
   if (!sdk) {
+    output.spinner(`${t('fleekSdkAuth')}`);
     output.error(t('fleekSdkAuthError'));
     throw new UnauthenticatedError();
   }
+  output.spinner(`${t('fleekSdkAuth')}`);
   output.success(t('fleekSdkAuthSuccess'));
   return sdk;
 }
