@@ -32,7 +32,7 @@ export const runtime = 'edge';
 2. **Set environment variables**
 
 ```sh
-export FLEEK_PAT=<your personal access token>
+export FLEEK_TOKEN=<your personal access token>
 ```
 
 3. Add `fleek.json` to your project's root dir:

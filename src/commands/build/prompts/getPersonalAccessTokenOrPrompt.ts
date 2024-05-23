@@ -3,7 +3,7 @@ import { t } from '../../../utils/translation.js';
 import { secrets } from '../../../secrets.js';
 
 export const getPersonalAccessTokenOrPrompt = async () => {
-  let personalAccessToken = secrets.FLEEK_PAT;
+  let personalAccessToken = secrets.FLEEK_TOKEN;
 
   if (!personalAccessToken) {
     personalAccessToken = await textPrompt({
