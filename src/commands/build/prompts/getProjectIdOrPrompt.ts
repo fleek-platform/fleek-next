@@ -1,6 +1,5 @@
 import { textPrompt } from '../../../prompts/textPrompt.js';
 import { t } from '../../../utils/translation.js';
-import { secrets } from '../../../secrets.js';
 import { getProjectPathOrPrompt } from '../prompts/getProjectPathOrPrompt.js';
 import { loadJSONFromPath } from '../../../utils/json.js';
 import nodePath from 'node:path';
@@ -17,7 +16,7 @@ export const getProjectIdOrPrompt = async ({ path }: projectPath) => {
     });
   }
 
-  let configPath = nodePath.join(projectPath, 'fleek.json');
+  const configPath = nodePath.join(projectPath, 'fleek.json');
   const config: Record<string, string> = loadJSONFromPath(configPath);
 
   return config.FLEEK_PROJECT_ID;
