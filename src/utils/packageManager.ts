@@ -25,7 +25,7 @@ export function findPackageManager(opts: { projectPath: string }) {
 
 export function getBuildCommand(opts: { packageManager: string }) {
   const { packageManager } = opts;
-  return `${packageManager} build`;
+  return `${packageManager} run build`;
 }
 
 export function getInstallCommand(opts: { packageManager: string }) {

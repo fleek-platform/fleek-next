@@ -36,24 +36,31 @@ export const runtime = 'edge';
 2. **Set environment variables**
 
 ```sh
-export FLEEK_PROJECT_ID=<your project id>
-export FLEEK_PAT=<your personal access token>
+export FLEEK_TOKEN=<your personal access token>
 ```
 
-3. **Build and Deploy**
+3. Add `fleek.json` to your project's root dir:
+
+```json
+{
+  "FLEEK_PROJECT_ID": "<your project id>"
+}
+```
+
+4. **Build and Deploy**
 
 Use the Fleek Next.js adapter to build and deploy your application via the command line:
 
 ```sh
-npx fleek-next build
+npx fleek-next deploy
 # or if installed globally
-fleek-next build
+fleek-next deploy
 ```
 
 If you are running the command outside of your project's root dir, you can set the path to it with the project path flag `-p`/`--projectPath`:
 
 ```sh
-fleek-next build -p path/to/my/repo
+fleek-next deploy -p path/to/my/repo
 ```
 
 ## Login to Fleek
@@ -92,7 +99,7 @@ fleek projects list | grep '<name of your project>' | awk '{print $1}'
 
 ## Additional Options
 
-The `build` command supports several options to customize the build and deployment process:
+The `deploy` command supports several options to customize the build and deployment process:
 
 - `-d, --dryrun`: Builds the Next.js app without deploying it to Fleek. Defaults to `false`.
 - `-p, --project-path <path>`: The path to your Next.js project's root directory. Defaults to the path where the command is run.
