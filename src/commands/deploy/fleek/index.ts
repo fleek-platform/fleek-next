@@ -193,7 +193,7 @@ export async function uploadAssets(props: {
         fleekSdk: props.fleekSdk,
       });
 
-      response = { url: `https://${result}.ipfs.w3s.link`, type: 'middleware', name: '/' };
+      response = { url: `https://${result}.ipfs.w3s.link/`, type: 'middleware', name: '/' };
 
       output.success(t('assetsCreated', { url: response.url }));
     } else {
