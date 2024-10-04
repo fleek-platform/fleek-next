@@ -120,13 +120,16 @@ export async function bundle(opts: { projectPath: string }) {
       'process.env.NEXT_PRIVATE_DEBUG_CACHE': '"false"',
       'process.env.SUSPENSE_CACHE_URL': '""',
       'process.env.SUSPENSE_CACHE_BASEPATH': '"/cache"',
-      'process.env.SUSPENSE_CACHE_AUTH_TOKEN': '"foo"',
+      'process.env.SUSPENSE_CACHE_AUTH_TOKEN': '""',
+      'process.env.SUSPENSE_CACHE_PROTO': '""',
       'process.env.__NEXT_TEST_MAX_ISR_CACHE': '0',
       'process.env.__NEXT_INCREMENTAL_CACHE_IPC_PORT': '8080',
       'process.env.__NEXT_INCREMENTAL_CACHE_IPC_KEY': '"foo"',
       'process.env.__NEXT_PREVIEW_MODE_ID': '""',
       'process.env.__NEXT_PREVIEW_MODE_SIGNING_KEY': '""',
       'process.env.__NEXT_PREVIEW_MODE_ENCRYPTION_KEY': '""',
+      'process.env.VERCEL': '"0"',
+      'process.env.VERCEL_URL': '"fleek.xyz"',
     },
   });
 }
