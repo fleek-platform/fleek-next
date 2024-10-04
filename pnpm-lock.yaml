@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@fleek-platform/functions-esbuild-config':
-        specifier: ^0.0.5
-        version: 0.0.5(esbuild@0.20.2)
+        specifier: ^0.0.6
+        version: 0.0.6(esbuild@0.20.2)
       '@fleek-platform/next-on-fleek':
         specifier: 1.14.4
         version: 1.14.4(vercel@37.6.1(encoding@0.1.13))(wrangler@3.80.0)
@@ -733,8 +733,8 @@ packages:
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
     engines: {node: '>=14'}
 
-  '@fleek-platform/functions-esbuild-config@0.0.5':
-    resolution: {integrity: sha512-4t7MjuCoV43yvE/SlHfR1DzuzBUzV/yYCiF6fZd3z9jEWOUoDwy0zc82HjVUVOowAqivpMVl0oPJovHFy2KLFQ==}
+  '@fleek-platform/functions-esbuild-config@0.0.6':
+    resolution: {integrity: sha512-InykGVJ1jKukpi8/KFPdSQGfruySokzw2l6gOrEJkDF9ZhORz1dft942P525nnrhJCIR68cnJ8rCfRJAQYrCwA==}
     engines: {node: '>=18'}
     peerDependencies:
       esbuild: ^0.23.1
@@ -4425,7 +4425,7 @@ snapshots:
 
   '@fastify/busboy@2.1.1': {}
 
-  '@fleek-platform/functions-esbuild-config@0.0.5(esbuild@0.20.2)':
+  '@fleek-platform/functions-esbuild-config@0.0.6(esbuild@0.20.2)':
     dependencies:
       esbuild: 0.20.2
 

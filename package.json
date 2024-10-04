@@ -38,7 +38,7 @@
     "node": ">=18"
   },
   "dependencies": {
-    "@fleek-platform/functions-esbuild-config": "^0.0.5",
+    "@fleek-platform/functions-esbuild-config": "^0.0.6",
     "@fleek-platform/next-on-fleek": "1.14.4",
     "@fleek-platform/sdk": "2.1.5",
     "ansi-escapes": "^7.0.0",
