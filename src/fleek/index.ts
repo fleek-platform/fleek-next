@@ -1,4 +1,4 @@
-import { FleekFunction, FleekSdk } from '@fleekxyz/sdk';
+import { FleekFunction, FleekSdk } from '@fleek-platform/sdk';
 import { filesFromPaths } from 'files-from-path';
 import { output } from '../cli.js';
 import { t } from '../utils/translation.js';

@@ -8,8 +8,8 @@
   "main": "./dist/cli.js",
   "types": "./dist/cli.d.ts",
   "module": "./dist/cli.js",
-  "repository": "https://github.com/fleekxyz/fleek-next-cli",
-  "homepage": "https://github.com/fleekxyz/fleek-next-cli/#readme",
+  "repository": "https://github.com/fleek-platform/fleek-next-cli",
+  "homepage": "https://github.com/fleek-platform/fleek-next-cli/#readme",
   "license": "MIT",
   "type": "module",
   "keywords": [
@@ -38,9 +38,9 @@
     "node": ">=18"
   },
   "dependencies": {
-    "@fleek-platform/open-next": "^3.0.4",
-    "@fleek-platform/proxy": "0.1.0",
-    "@fleekxyz/sdk": "2.1.0-rc.1",
+    "@fleek-platform/functions-esbuild-config": "^0.0.5",
+    "@fleek-platform/next-on-fleek": "1.14.4",
+    "@fleek-platform/sdk": "2.1.5",
     "ansi-escapes": "^7.0.0",
     "as-table": "^1.0.55",
     "boxen": "^7.1.1",
@@ -54,6 +54,7 @@
     "ora": "^8.0.1",
     "prompts": "^2.4.2",
     "semver": "^7.6.2",
+    "server-only": "^0.0.1",
     "update-notifier": "^7.0.0",
     "update-notifier-cjs": "^5.1.6"
   },

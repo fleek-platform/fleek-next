@@ -61,7 +61,6 @@
   "skipInstallation": "Skip the installation of dependencies",
   "cleaning": "Cleaning previous build artifacts...",
   "cleaningSuccess": "Cleaned previous build artifacts.",
-  "openNextConfigOutputPath": "Open-next config output path: {outputPath}",
   "deployedHeader": "Deployed Functions & Assets",
   "uploadFunction": "λ Uploading code for function {name}...",
   "functionUploaded": "λ Uploaded code for function {name}",

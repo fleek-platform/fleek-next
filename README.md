@@ -65,12 +65,12 @@ fleek-next deploy -p path/to/my/repo
 
 ## Login to Fleek
 
-If you don't have a project ID or Fleek personal access token, you can make use of the [Fleek CLI](https://www.npmjs.com/package/@fleekxyz/cli):
+If you don't have a project ID or Fleek personal access token, you can make use of the [Fleek CLI](https://www.npmjs.com/package/@fleek-platform/cli):
 
 1. Install the Fleek CLI
 
 ```
-npm i -g @fleekxyz/cli
+npm i -g @fleek-platform/cli
 ```
 
 2. Login to your Fleek account

@@ -1,1 +1,1 @@
-export type Origin = { url: string; type: 'middleware' | 'functions'; name: string };
+export type Origin = { url: string; type: 'middleware' | 'functions' };
