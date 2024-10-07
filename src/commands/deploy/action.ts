@@ -10,6 +10,7 @@ import { getSdkClient } from '../../fleek/sdk.js';
 import { loadJSONFromPath } from '../../utils/json.js';
 import path from 'path';
 import { bundleNextOnFleekOutput, executeNextOnFleek } from './next-on-fleek/index.js';
+import { uploadDirectory } from '../../fleek/index.js';
 
 type BuildArgs = {
   dryRun?: boolean;
@@ -43,13 +44,6 @@ export async function cleanBuildArtifacts(projectPath: string) {
   output.success(t('cleaningSuccess'));
 }
 
-export async function bundle(opts: { projectPath: string }) {
-  const { projectPath } = opts;
-  output.box([t('bundlingApp')]);
-  await executeNextOnFleek({ projectPath });
-  await bundleNextOnFleekOutput({ projectPath });
-}
-
 export const buildAction = async (args: BuildArgs) => {
   const { dryRun, clean } = args;
 
@@ -75,8 +69,23 @@ export const buildAction = async (args: BuildArgs) => {
   output.debug('Loading package.json');
   const packageJson = loadJSONFromPath(path.join(projectPath, 'package.json'));
 
+  await executeNextOnFleek({ projectPath });
+
   // Bundle the Next.js app
-  await bundle({ projectPath });
+  let cid;
+  output.spinner(t('creatingAssets'));
+  if (dryRun) {
+    cid = 'dry-run-cid';
+    output.success(t('assetsCreatedDryRun'));
+  } else {
+    cid = await uploadDirectory({
+      path: path.join(projectPath, '.vercel', 'output', 'static'),
+      fleekSdk: sdk,
+    });
+    output.success(t('assetsCreated', { url: `https://${cid}.ipfs.flk-ipfs.xyz` }));
+  }
+
+  await bundleNextOnFleekOutput({ staticAssetCid: cid, projectPath });
 
   const deployedFunction = await createFunction({
     projectName: packageJson.name ?? path.basename(projectPath),
@@ -85,7 +94,6 @@ export const buildAction = async (args: BuildArgs) => {
     dryRun: dryRun ?? false,
   });
 
-  output.box([t('deployedHeader')]);
   output.table(Object.values([deployedFunction]));
 
   output.success(t('appBuildSuccess'));

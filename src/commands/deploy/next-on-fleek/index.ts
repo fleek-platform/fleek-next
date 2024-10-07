@@ -7,7 +7,6 @@ import path from 'path';
 
 export async function executeNextOnFleek({ projectPath }: { projectPath: string }) {
   output.log(t('buildingNextjsApp'));
-  // output.spinner(`${t('building')}`);
   try {
     await runNextOnPages({
       outdir: path.join(projectPath, '.vercel', 'output', 'static'),
@@ -24,6 +23,17 @@ export async function executeNextOnFleek({ projectPath }: { projectPath: string 
   }
 }
 
-export async function bundleNextOnFleekOutput(opts: { projectPath: string }) {
-  await bundle({ projectPath: opts.projectPath });
+export async function bundleNextOnFleekOutput(opts: { projectPath: string; staticAssetCid: string }) {
+  output.spinner(`${t('bundling')}`);
+  try {
+    await bundle({ projectPath: opts.projectPath, staticAssetCid: opts.staticAssetCid });
+    output.success(`${t('bundlingSuccess')}`);
+  } catch (error) {
+    if (error instanceof Error) {
+      output.error(t('bundlingErrorIncludeError', { error: error.message }));
+      throw new NextjsBundleError({ error });
+    }
+    output.error(t('bundlingError'));
+    throw new NextjsBundleError({});
+  }
 }

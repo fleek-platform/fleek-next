@@ -76,7 +76,7 @@ const replacePlugin: Plugin = {
   },
 };
 
-export async function bundle(opts: { projectPath: string }) {
+export async function bundle(opts: { projectPath: string; staticAssetCid: string }) {
   const asyncLocalStoragePolyfillPlugin = asyncLocalStoragePolyfill() as Plugin;
 
   const fleekConfig = createFleekBuildConfig({
@@ -90,6 +90,10 @@ export async function bundle(opts: { projectPath: string }) {
 
   await build({
     ...fleekConfig,
+    banner: {
+      ...fleekConfig.banner,
+      js: `globalThis.cid = "${opts.staticAssetCid}";` + fleekConfig.banner?.js,
+    },
     external: [...(fleekConfig.external || []), 'node:*', '@opentelemetry/api', 'critters'],
     treeShaking: true,
     loader: { '.ttf': 'file' },

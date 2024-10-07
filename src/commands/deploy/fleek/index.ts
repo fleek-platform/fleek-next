@@ -56,9 +56,6 @@ export async function createFunction(props: {
   const filePath = path.join(props.projectPath, '.fleek', 'dist', filename);
   const functionName = props.projectName;
 
-  console.log('functionName', functionName);
-  console.log('filePath', filePath);
-
   const result = await uploadFunctionFile({
     functionName,
     filePath,
