@@ -13,9 +13,10 @@ export async function uploadFunctionFile(props: {
   filePath: string;
   remotePath: string;
   fleekSdk: FleekSdk;
+  fleekFunction: FleekFunction;
   dryRun?: boolean;
 }): Promise<FleekFunction> {
-  const { functionName, filePath, remotePath, fleekSdk, dryRun } = props;
+  const { functionName, filePath, remotePath, fleekSdk, fleekFunction, dryRun } = props;
 
   let data = await fs.readFile(filePath, 'utf8');
 
@@ -34,7 +35,7 @@ export async function uploadFunctionFile(props: {
   }
 
   try {
-    return uploadFunction({ filePath, fileName: path.basename(filePath), name: functionName, fleekSdk });
+    return uploadFunction({ filePath, fileName: path.basename(filePath), name: functionName, fleekFunction, fleekSdk });
   } catch (error) {
     if (error instanceof Error) {
       output.error(t('fleekFileUploadErrorIncludeError', { error: error.message }));
@@ -49,6 +50,7 @@ export async function createFunction(props: {
   projectName: string;
   projectPath: string;
   fleekSdk: FleekSdk;
+  fleekFunction: FleekFunction;
   dryRun?: boolean;
 }): Promise<Origin> {
   const filename = 'index.js';
@@ -61,6 +63,7 @@ export async function createFunction(props: {
     filePath,
     remotePath: 'function',
     fleekSdk: props.fleekSdk,
+    fleekFunction: props.fleekFunction,
     dryRun: props.dryRun,
   });
 

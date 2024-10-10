@@ -2,6 +2,7 @@ import { asyncLocalStoragePolyfill, createFleekBuildConfig } from '@fleek-platfo
 import { build, BuildOptions, OnLoadArgs, OnLoadResult, Plugin } from 'esbuild';
 import * as path from 'node:path';
 import * as fs from 'node:fs';
+import { FleekFunction } from '@fleek-platform/sdk';
 
 const wasmPlugin: Plugin = {
   name: 'wasm',
@@ -76,8 +77,10 @@ const replacePlugin: Plugin = {
   },
 };
 
-export async function bundle(opts: { projectPath: string; staticAssetCid: string }) {
+export async function bundle(opts: { projectPath: string; staticAssetCid: string; fleekFunction: FleekFunction }) {
   const asyncLocalStoragePolyfillPlugin = asyncLocalStoragePolyfill() as Plugin;
+
+  const url = `https://${opts.fleekFunction.slug}.functions.on-fleek.app`;
 
   const fleekConfig = createFleekBuildConfig({
     filePath: path.join(opts.projectPath, '.vercel', 'output', 'static', '_worker.js', 'index.js'),
@@ -133,7 +136,8 @@ export async function bundle(opts: { projectPath: string; staticAssetCid: string
       'process.env.__NEXT_PREVIEW_MODE_SIGNING_KEY': '""',
       'process.env.__NEXT_PREVIEW_MODE_ENCRYPTION_KEY': '""',
       'process.env.VERCEL': '"0"',
-      'process.env.VERCEL_URL': '"fleek.xyz"',
+      'process.env.FLEEK_URL': `"${url}"`,
+      'process.env.VERCEL_URL': `"${url}"`,
     },
   });
 }

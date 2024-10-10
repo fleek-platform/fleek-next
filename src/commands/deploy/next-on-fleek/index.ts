@@ -4,6 +4,7 @@ import { t } from '../../../utils/translation.js';
 import { NextjsBundleError } from '../../../errors/NextjsBundleError.js';
 import { bundle } from './bundle.js';
 import path from 'path';
+import { FleekFunction } from '@fleek-platform/sdk';
 
 export async function executeNextOnFleek({ projectPath }: { projectPath: string }) {
   output.log(t('buildingNextjsApp'));
@@ -23,10 +24,18 @@ export async function executeNextOnFleek({ projectPath }: { projectPath: string 
   }
 }
 
-export async function bundleNextOnFleekOutput(opts: { projectPath: string; staticAssetCid: string }) {
+export async function bundleNextOnFleekOutput(opts: {
+  projectPath: string;
+  staticAssetCid: string;
+  fleekFunction: FleekFunction;
+}) {
   output.spinner(`${t('bundling')}`);
   try {
-    await bundle({ projectPath: opts.projectPath, staticAssetCid: opts.staticAssetCid });
+    await bundle({
+      projectPath: opts.projectPath,
+      staticAssetCid: opts.staticAssetCid,
+      fleekFunction: opts.fleekFunction,
+    });
     output.success(`${t('bundlingSuccess')}`);
   } catch (error) {
     if (error instanceof Error) {

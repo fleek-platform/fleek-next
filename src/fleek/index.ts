@@ -15,6 +15,7 @@ export async function uploadFunction(props: {
   filePath: string;
   fileName: string;
   name: string;
+  fleekFunction: FleekFunction;
   fleekSdk: FleekSdk;
 }): Promise<FleekFunction> {
   const files = await filesFromPaths([props.filePath]);
@@ -25,25 +26,12 @@ export async function uploadFunction(props: {
   });
   output.spinner(`${t('functionUploaded', { name: props.name })}...`);
 
-  let fleekFunction: FleekFunction;
-  try {
-    output.spinner(`${t('gettingFunction', { name: props.name })}...`);
-    fleekFunction = await props.fleekSdk.functions().get({ name: props.name });
-    output.spinner(`${t('functionFound', { name: props.name, slug: fleekFunction.slug })}...`);
-  } catch (error) {
-    output.spinner(`${t('creatingFunction', { name: props.name })}...`);
-    fleekFunction = await props.fleekSdk.functions().create({
-      name: props.name,
-    });
-    output.spinner(`${t('functionCreated', { name: props.name })}...`);
-  }
-
   output.spinner(`${t('deployingFunction', { name: props.name })}...`);
   await props.fleekSdk.functions().deploy({
-    functionId: fleekFunction.id,
+    functionId: props.fleekFunction.id,
     cid: uploadFileResult.pin.cid,
   });
   output.success(`${t('functionDeployed', { name: props.name })}...`);
 
-  return fleekFunction;
+  return props.fleekFunction;
 }

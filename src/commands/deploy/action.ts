@@ -11,6 +11,7 @@ import { loadJSONFromPath } from '../../utils/json.js';
 import path from 'path';
 import { bundleNextOnFleekOutput, executeNextOnFleek } from './next-on-fleek/index.js';
 import { uploadDirectory } from '../../fleek/index.js';
+import { FleekFunction } from '@fleek-platform/sdk';
 
 type BuildArgs = {
   dryRun?: boolean;
@@ -85,12 +86,28 @@ export const buildAction = async (args: BuildArgs) => {
     output.success(t('assetsCreated', { url: `https://${cid}.ipfs.flk-ipfs.xyz` }));
   }
 
-  await bundleNextOnFleekOutput({ staticAssetCid: cid, projectPath });
+  const projectName = packageJson.name ?? path.basename(projectPath);
+
+  let fleekFunction: FleekFunction;
+  try {
+    output.spinner(`${t('gettingFunction', { name: projectName })}...`);
+    fleekFunction = await sdk.functions().get({ name: projectName });
+    output.spinner(`${t('functionFound', { name: projectName, slug: fleekFunction.slug })}...`);
+  } catch (error) {
+    output.spinner(`${t('creatingFunction', { name: projectName })}...`);
+    fleekFunction = await sdk.functions().create({
+      name: projectName,
+    });
+    output.spinner(`${t('functionCreated', { name: projectName })}...`);
+  }
+
+  await bundleNextOnFleekOutput({ staticAssetCid: cid, projectPath, fleekFunction });
 
   const deployedFunction = await createFunction({
-    projectName: packageJson.name ?? path.basename(projectPath),
+    projectName,
     projectPath,
     fleekSdk: sdk,
+    fleekFunction,
     dryRun: dryRun ?? false,
   });
 
