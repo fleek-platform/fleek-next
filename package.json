@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@fleek-platform/functions-esbuild-config": "^0.0.8",
-    "@fleek-platform/next-on-fleek": "1.14.5",
+    "@fleek-platform/next-on-fleek": "1.14.6",
     "@fleek-platform/sdk": "2.1.5",
     "ansi-escapes": "^7.0.0",
     "as-table": "^1.0.55",
@@ -49,12 +49,10 @@
     "commander": "^12.0.0",
     "conf": "^12.0.0",
     "esbuild": "^0.24.0",
-    "esbuild-plugin-alias": "^0.2.1",
     "files-from-path": "^1.0.4",
     "ora": "^8.0.1",
     "prompts": "^2.4.2",
     "semver": "^7.6.2",
-    "server-only": "^0.0.1",
     "update-notifier": "^7.0.0",
     "update-notifier-cjs": "^5.1.6"
   },
