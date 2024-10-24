@@ -98,7 +98,10 @@ export async function bundle(opts: { projectPath: string; staticAssetCid: string
     external: [...(fleekConfig.external || []), 'node:*', '@opentelemetry/api', 'critters'],
     treeShaking: true,
     loader: { '.ttf': 'file' },
-    minify: true,
+    minify: false,
+    minifyIdentifiers: true,
+    minifySyntax: true,
+    minifyWhitespace: false,
     plugins: [wasmPlugin, replacePlugin],
     alias: {
       url: 'node:url',
