@@ -1,6 +1,6 @@
 {
   "name": "@fleek-platform/next",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Deploy your server-side Next.js application on Fleek",
   "bin": {
     "fleek-next": "./dist/index.js"
