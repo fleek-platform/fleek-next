@@ -11,6 +11,7 @@ export async function executeNextOnFleek({ projectPath }: { projectPath: string 
   try {
     await runNextOnPages({
       outdir: path.join(projectPath, '.vercel', 'output', 'static'),
+      disableWorkerMinification: true,
     });
 
     output.success(t('nextjsBuildSuccess'));

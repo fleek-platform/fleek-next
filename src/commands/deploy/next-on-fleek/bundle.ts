@@ -1,4 +1,4 @@
-import { asyncLocalStoragePolyfill, createFleekBuildConfig } from '@fleek-platform/functions-esbuild-config';
+import { createFleekBuildConfig } from '@fleek-platform/functions-esbuild-config';
 import { build, BuildOptions, OnLoadArgs, OnLoadResult, Plugin } from 'esbuild';
 import * as path from 'node:path';
 import * as fs from 'node:fs';
@@ -78,8 +78,6 @@ const replacePlugin: Plugin = {
 };
 
 export async function bundle(opts: { projectPath: string; staticAssetCid: string; fleekFunction: FleekFunction }) {
-  const asyncLocalStoragePolyfillPlugin = asyncLocalStoragePolyfill() as Plugin;
-
   const url = `https://${opts.fleekFunction.slug}.functions.on-fleek.app`;
 
   const fleekConfig = createFleekBuildConfig({
@@ -101,7 +99,7 @@ export async function bundle(opts: { projectPath: string; staticAssetCid: string
     treeShaking: true,
     loader: { '.ttf': 'file' },
     minify: true,
-    plugins: [wasmPlugin, asyncLocalStoragePolyfillPlugin, replacePlugin],
+    plugins: [wasmPlugin, replacePlugin],
     alias: {
       url: 'node:url',
       buffer: 'node:buffer',
@@ -138,6 +136,7 @@ export async function bundle(opts: { projectPath: string; staticAssetCid: string
       'process.env.VERCEL': '"0"',
       'process.env.FLEEK_URL': `"${url}"`,
       'process.env.VERCEL_URL': `"${url}"`,
+      'process.env.NEXT_PHASE': `"phase-production-server"`,
     },
   });
 }
