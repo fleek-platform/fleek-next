@@ -1,6 +1,5 @@
 import type { Writable } from 'node:stream';
 
-import asTable from 'as-table';
 import boxen, { Options } from 'boxen';
 import type { ForegroundColor } from 'chalk';
 import chalk from 'chalk';
@@ -129,12 +128,6 @@ export class Output {
       this.print(message, { prefix: { color: 'gray', message: `${t('debug')}:` } });
       this.printNewLine();
     }
-  };
-
-  public table = (data: { [key: string]: string | number | undefined | null | Date }[]) => {
-    this.printNewLine();
-    this.print(asTable(data));
-    this.printNewLine(2);
   };
 
   public box = (lines: string[], options: Options = {}) => {

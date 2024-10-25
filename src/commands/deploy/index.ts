@@ -5,8 +5,7 @@ import { buildAction } from './action.js';
 
 export default (program: Command) => {
   const cmd = program
-    .command('deploy')
-    .option('-d, --dryRun', t('dryRun'))
+    .command('build')
     .option('-p, --projectPath <path>', t('path'))
     .option('-s, --skipBuild', t('skipBuild'))
     .option('-i, --skipInstallation', t('skipInstallation'))

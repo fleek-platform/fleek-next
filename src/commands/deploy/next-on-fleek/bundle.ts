@@ -2,7 +2,6 @@ import { createFleekBuildConfig } from '@fleek-platform/functions-esbuild-config
 import { build, BuildOptions, OnLoadArgs, OnLoadResult, Plugin } from 'esbuild';
 import * as path from 'node:path';
 import * as fs from 'node:fs';
-import { FleekFunction } from '@fleek-platform/sdk';
 
 const wasmPlugin: Plugin = {
   name: 'wasm',
@@ -77,9 +76,7 @@ const replacePlugin: Plugin = {
   },
 };
 
-export async function bundle(opts: { projectPath: string; staticAssetCid: string; fleekFunction: FleekFunction }) {
-  const url = `https://${opts.fleekFunction.slug}.functions.on-fleek.app`;
-
+export async function bundle(opts: { projectPath: string }) {
   const fleekConfig = createFleekBuildConfig({
     filePath: path.join(opts.projectPath, '.vercel', 'output', 'static', '_worker.js', 'index.js'),
     bundle: true,
@@ -91,16 +88,12 @@ export async function bundle(opts: { projectPath: string; staticAssetCid: string
 
   await build({
     ...fleekConfig,
-    banner: {
-      ...fleekConfig.banner,
-      js: `globalThis.cid = "${opts.staticAssetCid}";` + fleekConfig.banner?.js,
-    },
     external: [...(fleekConfig.external || []), 'node:*', '@opentelemetry/api', 'critters'],
     treeShaking: true,
     loader: { '.ttf': 'file' },
     minify: false,
-    minifyIdentifiers: true,
-    minifySyntax: true,
+    minifyIdentifiers: false,
+    minifySyntax: false,
     minifyWhitespace: false,
     plugins: [wasmPlugin, replacePlugin],
     alias: {
@@ -137,8 +130,7 @@ export async function bundle(opts: { projectPath: string; staticAssetCid: string
       'process.env.__NEXT_PREVIEW_MODE_SIGNING_KEY': '""',
       'process.env.__NEXT_PREVIEW_MODE_ENCRYPTION_KEY': '""',
       'process.env.VERCEL': '"0"',
-      'process.env.FLEEK_URL': `"${url}"`,
-      'process.env.VERCEL_URL': `"${url}"`,
+      'process.env.VERCEL_URL': `process.env.FLEEK_URL`,
       'process.env.NEXT_PHASE': `"phase-production-server"`,
     },
   });
