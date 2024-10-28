@@ -23,6 +23,13 @@ export const enum Icons {
   Warning = '⚠️',
 }
 
+export type InstructionOptions = {
+  command?: string;
+  description?: string;
+  examples?: string[];
+  notes?: string[];
+};
+
 export class Output {
   private stream: Writable;
   public debugEnabled: boolean;
@@ -133,13 +140,13 @@ export class Output {
   public box = (lines: string[], options: Options = {}) => {
     const defaultOptions: Options = {
       textAlignment: 'center',
-      margin: 1,
-      padding: 1,
+      margin: 0.5,
+      padding: 0.5,
       float: 'left',
       borderColor: 'yellow',
     };
 
-    this.printNewLine();
+    // this.printNewLine();
     this.print(boxen(lines.join('\n'), { ...defaultOptions, ...options }));
     this.printNewLine();
   };

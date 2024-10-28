@@ -63,5 +63,9 @@ export const buildAction = async (args: BuildArgs) => {
   // Copy the static assets to the .fleek directory
   await copyStaticAssets({ projectPath });
 
-  output.success(t('appBuildSuccess'));
+  output.ready(t('appBuildSuccess'));
+  output.printNewLine();
+  output.chore(t('deployInstructions'));
+  output.box([t('deployCommand')]);
+  output.hint('Make sure to create a function first using `fleek functions create`');
 };
