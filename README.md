@@ -24,7 +24,7 @@ pnpm install @fleek-platform/next
 
 # Usage
 
-To deploy your Next.js application to Fleek, follow these steps:
+To build and prepare your Next.js application for deployment on Fleek, follow these steps:
 
 1. **Configure Edge Runtime**
    Add the following code to any routes that run server-side code to ensure they run on the edge:
@@ -33,79 +33,37 @@ To deploy your Next.js application to Fleek, follow these steps:
 export const runtime = 'edge';
 ```
 
-2. **Set environment variables**
-
-```sh
-export FLEEK_TOKEN=<your personal access token>
-```
-
-3. Add `fleek.json` to your project's root dir:
-
-```json
-{
-  "FLEEK_PROJECT_ID": "<your project id>"
-}
-```
-
-4. **Build and Deploy**
+2. **Build**
 
 Use the Fleek Next.js adapter to build and deploy your application via the command line:
 
 ```sh
-npx fleek-next deploy
+npx fleek-next build
 # or if installed globally
-fleek-next deploy
+fleek-next build
 ```
 
 If you are running the command outside of your project's root dir, you can set the path to it with the project path flag `-p`/`--projectPath`:
 
 ```sh
-fleek-next deploy -p path/to/my/repo
+fleek-next build -p path/to/my/repo
 ```
 
-## Login to Fleek
+The `build` command supports several options to customize the build and deployment process:
 
-If you don't have a project ID or Fleek personal access token, you can make use of the [Fleek CLI](https://www.npmjs.com/package/@fleek-platform/cli):
-
-1. Install the Fleek CLI
-
-```
-npm i -g @fleek-platform/cli
-```
-
-2. Login to your Fleek account
-
-```sh
-fleek login
-```
-
-3. Create a personal access token and store it somewhere safe:
-
-```sh
-fleek pat create --name '<name of your personal access token>'
-```
-
-4. Create a project if you don't have one yet:
-
-```sh
-fleek projects create --name '<name of your project>'
-```
-
-5. Get your project ID:
-
-```sh
-fleek projects list | grep '<name of your project>' | awk '{print $1}'
-```
-
-## Additional Options
-
-The `deploy` command supports several options to customize the build and deployment process:
-
-- `-d, --dryrun`: Builds the Next.js app without deploying it to Fleek. Defaults to `false`.
 - `-p, --project-path <path>`: The path to your Next.js project's root directory. Defaults to the path where the command is run.
 - `-s, --skipBuild`: Skip building the Next.js app before deployment, useful if you want to build the application yourself due to any possible extra steps. Defaults to `false`.
+- `-i, --skipInstallation`: Skip installing the dependencies. Defaults to `false`.
 - `-c, --clean`: Clean previous build artifacts before building.
 - `-v, --verbose`: Enable verbose logging.
+
+3. **Deploy your function:**
+
+Use the [Fleek CLI](https://www.npmjs.com/package/@fleek-platform/cli) to deploy your function:
+
+```sh
+fleek functions deploy --noBundle --name '<name of your function>' --path .fleek/dist/index.js
+```
 
 # Release Process
 

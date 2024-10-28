@@ -27,5 +27,9 @@
   "cleaning": "Cleaning previous build artifacts...",
   "cleaningSuccess": "Cleaned previous build artifacts.",
   "copyingStaticAssets": "Copying static assets...",
-  "copyingStaticAssetsSuccess": "Copied static assets successfully"
+  "copyingStaticAssetsSuccess": "Copied static assets successfully",
+  "updateAvailable": "🚀 {updateRequired}\n\nWe've just released a new version of {packageName} that includes important updates and improvements. Your current version is {currentVersion}, but the latest version is {latestVersion}\n\n‣ {whyUpdate}\n\n🔒 Security patches\n🚀 New features\n🐛 Bug fixes\n\n‣ {howToUpdate}\n\n1) Run the command: {installCmd}\n2) Verify the update by running: {verifyCmd}\n\n🙏 Thank You! Your support helps us keep {packageName} the best CLI tool it can be.",
+  "updateRequired": "Update Required!",
+  "whyUpdate": "Why Update?",
+  "howToUpdate": "How to Update?"
 }
