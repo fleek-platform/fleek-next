@@ -3,7 +3,7 @@ import { output } from '../../../cli.js';
 import { t } from '../../../utils/translation.js';
 import { NextjsBundleError } from '../../../errors/NextjsBundleError.js';
 import { bundle } from './bundle.js';
-import path from 'path';
+import path from 'node:path';
 
 export async function executeNextOnFleek({ projectPath }: { projectPath: string }) {
   output.log(t('buildingNextjsApp'));
