@@ -96,6 +96,7 @@ export async function bundle(opts: { projectPath: string }) {
     minifySyntax: false,
     minifyWhitespace: false,
     plugins: [wasmPlugin, replacePlugin],
+    banner: {},
     alias: {
       url: 'node:url',
       buffer: 'node:buffer',
