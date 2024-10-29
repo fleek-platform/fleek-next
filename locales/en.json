@@ -33,5 +33,5 @@
   "whyUpdate": "Why Update?",
   "howToUpdate": "How to Update?",
   "deployInstructions": "Deploy your app by running the following command:",
-  "deployCommand": "fleek functions deploy --noBundle --path .fleek/dist/index.js --assets .fleek/static"
+  "deployCommand": "fleek functions deploy --bundle=false --path .fleek/dist/index.js --assets .fleek/static"
 }
