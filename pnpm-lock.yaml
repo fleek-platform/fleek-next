@@ -5,7 +5,7 @@ specifiers:
   '@commitlint/config-conventional': ^19.2.2
   '@eslint/js': ^9.2.0
   '@fleek-platform/functions-esbuild-config': 0.0.19
-  '@fleek-platform/next-on-fleek': 1.15.0
+  '@fleek-platform/next-on-fleek': 1.15.1
   '@types/node': ^20.12.11
   '@types/prompts': ^2.4.9
   '@types/semver': ^7.5.8
@@ -28,7 +28,7 @@ specifiers:
 
 dependencies:
   '@fleek-platform/functions-esbuild-config': 0.0.19_esbuild@0.24.0
-  '@fleek-platform/next-on-fleek': 1.15.0
+  '@fleek-platform/next-on-fleek': 1.15.1
   ansi-escapes: 7.0.0
   boxen: 7.1.1
   chalk: 5.3.0
@@ -597,8 +597,8 @@ packages:
       esbuild: 0.24.0
     dev: false
 
-  /@fleek-platform/next-on-fleek/1.15.0:
-    resolution: {integrity: sha512-M6nzn3YQA5+2MD5u0B1KYiyPvwACgsXMw/V/qWPbb9JIlqj7rW9AEWLI8yRmqD+XOoBJVms/71zjOA2tgzuxWw==}
+  /@fleek-platform/next-on-fleek/1.15.1:
+    resolution: {integrity: sha512-7zQFxOZJfmoF2kTdLP2fpDrGrcUvQTq0b+A+cVrMrdxI7w0syf/wwrxYLBCnjApTDYRv1M0vgubHbRI/B8xyww==}
     peerDependencies:
       '@cloudflare/workers-types': ^4.20240208.0
       vercel: '>=30.0.0'
